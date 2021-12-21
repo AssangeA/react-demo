@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> </title>
+</head>
+
+<body>
+    <div id="test"></div>
+    <!-- 引入react js库  核心库必须放前面-->
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <!-- babel 用于将jsx转为js -->
+    <script src="../js/babel.min.js"></script>
+    <!-- 此处必须写babel ,以前一般写JavaScript -->
+    <script type="text/babel">
+       class Demo extends React.Component{
+           //展示左侧输入框的数据
+           shwoData=()=>{
+               const {input1} = this //注意是refs
+               console.log(input1.value);
+           }
+           //展示右侧输入框的数据
+           shwoData2=()=>{
+               const {input2} = this
+               console.log(input2.value);
+           }
+           render(){
+               return (
+                   <div>
+                        <input ref={(currentNode)=>{this.input1=currentNode}} type="text" placeholder="点击按钮提示数据" />&nbsp;
+                        <button onClick={this.shwoData}>点我提示左侧的数据</button>&nbsp; 
+                        <input onBlur={this.shwoData2} ref={c=>this.input2=c} type="text" placeholder="点击按钮提示数据" />&nbsp;
+                    </div>
+               )
+           }
+       }
+        ReactDOM.render(<Demo />, document.getElementById('test'))
+    </script>
+
+
+</body>
+
+</html>

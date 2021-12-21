@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> </title>
+</head>
+
+<body>
+    <div id="test"></div>
+    <!-- 引入react js库  核心库必须放前面-->
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <!-- babel 用于将jsx转为js -->
+    <script src="../js/babel.min.js"></script>
+    <!-- 此处必须写babel ,以前一般写JavaScript -->
+    <script type="text/babel">
+        class Demo extends React.Component {
+            state = { isHot: true }
+            //展示左侧输入框的数据
+            shwoData = () => {
+                const { input1 } = this //注意是refs
+                console.log(input1.value);
+            }
+            showInfo = () => {
+                const { isHot } = this.state;
+                this.setState({ isHot: !isHot })
+            }
+            saveInput=(c)=>{
+                this.input1=c
+                console.log("@",c);
+            }
+            render() {
+            const {isHot} =this.state
+                return (
+                    <div>
+                        <h2>今天天气很{isHot ? '炎热' : '凉爽'}</h2>
+                       { /*<input ref={(currentNode) => { this.input1 = currentNode; console.log('@'); }} type="text" placeholder="点击按钮提示数据" /><br /><br />*/}
+                       <input ref={this.saveInput} type="text" placeholder="点击按钮提示数据" /><br /><br />
+                        <button onClick={this.shwoData}>点我提示左侧的数据</button>&nbsp;
+                        <button onClick={this.showInfo} >更新状态</button>
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<Demo />, document.getElementById('test'))
+    </script>
+
+
+</body>
+
+</html>

@@ -26,9 +26,11 @@
 				return <h1 onClick={this.changeWeather}>今天天气很{isHot ? '炎热' : '凉爽'}，{wind}</h1>
 			}
 
-			//自定义方法————要用赋值语句的形式+箭头函数
+			//自定义方法————要用赋值语句的形式+箭头函数，赋值语句！！！！！！！！！！！！！ 此时this指向实例对象
 			changeWeather = ()=>{
+				console.log(this);
 				const isHot = this.state.isHot
+				//严重注意 状态(state) 不可直接更改,需要使用setState()进行更改，且更新是一种合并，不是替换！！！！
 				this.setState({isHot:!isHot})
 			}
 		}
