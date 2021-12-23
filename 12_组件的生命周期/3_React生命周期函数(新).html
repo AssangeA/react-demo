@@ -19,21 +19,19 @@
     <script type="text/babel">
 
         /*
-        1. 初始化阶段: 由ReactDOM.render()触发---初次渲染
+            1. 初始化阶段: 由ReactDOM.render()触发---初次渲染
                         1.constructor()
                         2.getDerivedStateFromProps 
                         3.render()
-                        4.componentDidMount()========================================>常用
-                                                            一般在这个钩子中做一些初始化的事，如：开启定时器、发送网络请求、订阅消息
-            2. 更新阶段: 由组件内部this.setSate()或父组件重新render触发
+                        4.componentDidMount()
+	        2. 更新阶段: 由组件内部this.setSate()或父组件重新render触发
                         1.getDerivedStateFromProps
                         2.shouldComponentUpdate()
-                        3.render()======================================================>必须使用的一个
+                        3.render()
                         4.getSnapshotBeforeUpdate
                         5.componentDidUpdate()
-            3. 卸载组件: 由ReactDOM.unmountComponentAtNode()触发
-                        1.componentWillUnmount()=========================================>常用
-                                                                 一般在这个钩子中做一些收尾的事，例如：关闭定时器、取消订阅消息
+	        3. 卸载组件: 由ReactDOM.unmountComponentAtNode()触发
+                        1.componentWillUnmount()
         
         
         
@@ -56,23 +54,27 @@
             death = () => {
                 ReactDOM.unmountComponentAtNode(document.getElementById("test"))
             }
-            //组件将要挂载的钩子
-            UNSAFE_componentWillMount() {
-                console.log('Count-componentWillMount');
-            }
+           
             //控制组件更新的阀门    默认返回true
             shouldComponentUpdate() {
                 console.log('Count-shouldComponentUpdate');
                 return true
             }
-
-            //组件将要更新的钩子’
-            UNSAFE_componentWillUpdate() {
-                console.log('Count-componentWillUpdate');
+            // return null或者状态对象   如果state任何时候都取决于props就可以使用getDerivedStateFromProps
+           static getDerivedStateFromProps(props,state){
+                console.log('Count-getDerivedStateFromProps',props,state);
+                return null
             }
+
+            //在更新之前获取快照，任何状态都可以
+            getSnapshotBeforeUpdate(prevProps,prevState){
+                console.log("count-getSnapshotBeforeUpdate",prevProps,prevState);
+                return '1111'
+            }
+
             //组件更新完毕
-            componentDidUpdate(){
-                console.log('Count-componentDidUpdate');
+            componentDidUpdate(preProps,preState,snapshot){
+                console.log('Count-componentDidUpdate',preProps,preState,snapshot);
             }
             //渲染
             render() {
@@ -95,8 +97,10 @@
                 console.log('Count-componentWillUnmount');
             }
 
+            
+
         }
-        ReactDOM.render(<Count />, document.getElementById("test"))
+        ReactDOM.render(<Count name="tom" />, document.getElementById("test"))
     </script>
 </body>
 
