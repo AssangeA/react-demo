@@ -1,17 +1,16 @@
 import React, { Component } from 'react' //文件里面包含多种暴露，包括default暴露和export暴露
-import Count from "./containers/Count"
-import store from "./redux/store"
-import Person from "./containers/Person"
+import List from './components/List'
+import Search from './components/Search'
 
 class App extends Component {
-  
-
 
   render() {
     return (
       <div>
-      <Count store={store} />
-      <Person />
+        <div className="container">
+         <Search  />
+         <List />
+        </div>
       </div>
     )
   }
