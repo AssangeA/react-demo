@@ -11,7 +11,7 @@ export default class App extends PureComponent {
     }
     render() {
         return (
-            <div>
+            <div className="app">
                 <Routes>
                     <Route path="/" element={<Admin />} ></Route>
                     <Route path="/login" element={<Login />} ></Route>
@@ -20,3 +20,4 @@ export default class App extends PureComponent {
         )
     }
 }
+
