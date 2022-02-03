@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import {useNavigate} from "react-router-dom"
+import { Redirect } from 'react-router-dom';
 import "./login.less"
 import { httpLogin } from '../../api/login';
+import memoryUtils from '../../utils/memoryUtils';
+import storageUtils from '../../utils/storageUtils';
 
 /**
  * 登录组件
@@ -15,20 +17,25 @@ export default class Login extends Component {
     onFinish =async (event) => {
           let res = await  httpLogin(event)
           if(!res.status){
-              const navigate = useNavigate()
-              navigate("/")
-            message.success("登录成功！")
+            memoryUtils.user=res.data;
+            storageUtils.setUser(res.data);
+            this.props.history.replace("/");
+            message.success("登录成功！");
           }else{
-            message.error("登录失败！请检查用户名和密码！")
+            message.error("登录失败！请检查用户名和密码！");
           }
       
     }
 
     render() {
+        const user= memoryUtils.user;
+        if(user && user._id){
+            return <Redirect to="/" />
+        }
         return (
             <div className='login'>
                 <header className='login-header'>
-                    <img src={require('../../assets/logo.png')} alt="" />
+                    <img src={require('../../assets/images/logo.png')} alt="" />
                     <h1>React项目：后台管理系统</h1>
                 </header>
                 <section className='login-content'>
